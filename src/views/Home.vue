@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div v-if="showSync">
+      <SyncComponent />
+    </div>
+    <button @click="showSync = !showSync">Toggle Sync Component</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import Error from "@/components/Error.vue";
+import Loading from "@/components/Loading.vue";
 
+const SyncComponent = () => ({
+  component: import("@/components/SyncComponent.vue"),
+  loading: Loading,
+  delay: 2000,
+  error: Error
+});
 export default {
   name: "Home",
   components: {
-    HelloWorld
+    SyncComponent: SyncComponent
+  },
+  data() {
+    return {
+      showSync: false
+    };
   }
 };
 </script>
